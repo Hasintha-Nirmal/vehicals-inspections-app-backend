@@ -1,0 +1,49 @@
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+const server = require('./server'); // This starts the express server
+
+let mainWindow;
+
+function createWindow() {
+    mainWindow = new BrowserWindow({
+        width: 1280,
+        height: 800,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+        },
+        icon: path.join(__dirname, 'build/icon.ico') // Adjust icon path if needed
+    });
+
+    // Load the local server
+    // Note: We use the PORT from .env or default to 3000
+    const PORT = process.env.PORT || 3000;
+
+    // Retry loading URL until server is ready
+    const loadUrl = () => {
+        mainWindow.loadURL(`http://localhost:${PORT}`).catch((err) => {
+            console.log('Server not ready, retrying...');
+            setTimeout(loadUrl, 1000);
+        });
+    };
+
+    loadUrl();
+
+    mainWindow.on('closed', function () {
+        mainWindow = null;
+    });
+}
+
+app.on('ready', createWindow);
+
+app.on('window-all-closed', function () {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', function () {
+    if (mainWindow === null) {
+        createWindow();
+    }
+});

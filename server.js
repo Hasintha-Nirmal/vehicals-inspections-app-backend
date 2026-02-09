@@ -20,6 +20,43 @@ app.use((req, res, next) => {
 //routes
 app.use('/api/v1/inspections', inspectionRoutes);
 
+// Serves the frontend
+const path = require('path');
+const fs = require('fs');
+const frontendBuildPath = path.join(__dirname, 'frontend-build');
+const frontendDevPath = path.join(__dirname, '../frontend/dist');
+
+// Check if packaged frontend exists (Electron/Production)
+if (fs.existsSync(frontendBuildPath)) {
+    console.log('Serving frontend from packaged build:', frontendBuildPath);
+    app.use(express.static(frontendBuildPath));
+    app.get(/(.*)/, (req, res) => {
+        // Handle API routes passing through if regex matches everything? 
+        // No, Express handles middleware in order. Routes are defined above.
+        // We just need to check if it's an API call or not? 
+        // Actually, with `/(.*)/` it matches everything.
+        // Since API routes are defined ABOVE, they are handled.
+        // But we should filter if sending index.html
+        if (!req.path.startsWith('/api')) {
+            res.sendFile(path.join(frontendBuildPath, 'index.html'));
+        } else {
+            // Should not happen if API routes are matched, but just in case
+            res.status(404).send('Not Found');
+        }
+    });
+} else {
+    // Fallback to dev structure
+    console.log('Serving frontend from dev build:', frontendDevPath);
+    app.use(express.static(frontendDevPath));
+    app.get(/(.*)/, (req, res) => {
+        if (!req.path.startsWith('/api')) {
+            res.sendFile(path.join(frontendDevPath, 'index.html'));
+        } else {
+            res.status(404).send('Not Found');
+        }
+    });
+}
+
 
 //connect to db and start server
 mongoose.connect(process.env.MONGODB_URI, { dbName: process.env.DB_NAME })

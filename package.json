@@ -3,10 +3,30 @@
   "name": "v1.00",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "electron-main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build-frontend": "cd ../frontend && npm install && npm run build",
+    "start": "node server.js",
+    "electron-dev": "electron .",
+    "dist": "npm run build-frontend && xcopy \"..\\frontend\\dist\" \"frontend-build\" /E /I /Y && electron-builder"
+  },
+  "build": {
+    "appId": "com.devpros.vehicleinspection",
+    "productName": "Vehicle Inspection System",
+    "win": {
+      "target": "nsis"
+    },
+    "files": [
+      "**/*",
+      "frontend-build/**/*",
+      "!node_modules/electron/**",
+      "!dist/**"
+    ],
+    "directories": {
+      "output": "dist"
+    }
   },
   "keywords": [],
   "author": "",
@@ -17,5 +37,9 @@
     "dotenv": "^17.2.4",
     "express": "^5.2.1",
     "mongoose": "^9.1.6"
+  },
+  "devDependencies": {
+    "electron": "^28.2.1",
+    "electron-builder": "^24.9.1"
   }
 }
