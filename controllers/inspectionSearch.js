@@ -22,7 +22,7 @@ const searchInspections = async (req, res) => {
     }
 
     if (startDate && endDate) {
-      query.createdAt = { $gte: new Date(startDate), $lte: new Date(endDate) };
+      query.inspectionDate = { $gte: new Date(startDate), $lte: new Date(endDate) };
     }
 
     if (inspectionDetailes) {
@@ -35,10 +35,10 @@ const searchInspections = async (req, res) => {
     }
 
     if (startDate && !endDate) {
-      query.createdAt = { $gte: new Date(startDate) };
+      query.inspectionDate = { $gte: new Date(startDate) };
     }
     if (!startDate && endDate) {
-      query.createdAt = { $lte: new Date(endDate) };
+      query.inspectionDate = { $lte: new Date(endDate) };
     }
 
     const inspections = await inspectionModel
