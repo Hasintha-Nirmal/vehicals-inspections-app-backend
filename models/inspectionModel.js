@@ -2,17 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const inspectionSchema = new Schema({
-    chassisNumber: { 
+    chassisNumber: {
         type: String,
         required: true,
         unique: true
     },
-    inspectionDetailes:[{
+    inspectionDetailes: [{
         type: Number,
         required: true
     }],
     otherDetails: {
         type: String
+    },
+    inspectionDate: {
+        type: Date,
+        default: Date.now
     }
 }, { timestamps: true });
 
