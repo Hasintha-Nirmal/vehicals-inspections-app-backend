@@ -17,8 +17,11 @@ app.use((req, res, next) => {
     next();
 });
 
+const requireApiKey = require('./middleware/requireApiKey');
+
 //routes
-app.use('/api/v1/inspections', inspectionRoutes);
+app.use('/api/v1/inspections', requireApiKey, inspectionRoutes);
+
 
 // Serves the frontend
 const path = require('path');
