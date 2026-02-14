@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 //create token
 const createToken = (_id) => {
-    return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
+    return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '2h' });
 }
 
 //login user
@@ -24,7 +24,10 @@ const loginUser = async (req, res) => {
 
 //signup user
 const signupUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password ,invitecode} = req.body;
+    if(invitecode !== process.env.INVITE_CODE){
+        return res.status(400).json({ error: 'Invalid invite code' });
+    }
 
     try {
         const user = await User.signup(name, email, password);

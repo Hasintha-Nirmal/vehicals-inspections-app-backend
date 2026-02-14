@@ -26,10 +26,10 @@ router.post('/', createInspection);
 router.get('/id/:id', getInspectionById);
 
 // DELETE a inspection by ID
-//router.delete('/:id', deleteInspection);
+router.delete('/:id', deleteInspection);
 
 // UPDATE a inspection by ID
-//router.patch('/:id', updateInspection);
+router.patch('/:id', updateInspection);
 
 
 // Search inspections by chassis number or date range
