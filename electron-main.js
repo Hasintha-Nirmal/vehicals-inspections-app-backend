@@ -1,7 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 // Set to true to connect to remote backend (skips local server start)
-const CONNECT_REMOTE = true;
+const CONNECT_REMOTE = true; // Set to false to start local server and connect to it
 
 if (!CONNECT_REMOTE) {
     const server = require('./server'); // This starts the express server

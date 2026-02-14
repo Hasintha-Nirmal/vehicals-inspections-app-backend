@@ -11,6 +11,11 @@ const {
 
 const { searchInspections } = require('../controllers/inspectionSearch');
 
+const requireAuth = require('../middleware/requireAuth');
+
+// Require auth for all inspection routes
+router.use(requireAuth);
+
 // GET all inspections
 router.get('/', getAllInspections);
 

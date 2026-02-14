@@ -6,6 +6,7 @@ const cors = require('cors');
 //initialize express app
 const app = express();
 const inspectionRoutes = require('./routes/inspectionRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 
 //middlewares
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/api/v1/inspections', inspectionRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // Serves the frontend
 const path = require('path');
