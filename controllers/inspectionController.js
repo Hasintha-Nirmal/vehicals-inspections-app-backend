@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 // Get all inspections
 const getAllInspections = async (req, res) => {
-    const inspections = await infectionModel.find({}).sort({ createdAt: -1 });
+    const inspections = await infectionModel.find({}).sort({ inspectionDate: -1 });
     res.status(200).json(inspections);
 }
 
