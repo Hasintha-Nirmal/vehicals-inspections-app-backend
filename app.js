@@ -12,7 +12,7 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-    origin: '*', // Allow all origins (adjust this for production if needed)
+    origin: true, // Reflect the request origin, allowing credentials
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
