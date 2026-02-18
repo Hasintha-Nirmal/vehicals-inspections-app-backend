@@ -15,7 +15,13 @@ module.exports = async (req, res) => {
       console.log('Connected to MongoDB');
     } catch (error) {
       console.error('MongoDB connection error:', error);
-      return res.status(500).json({ error: 'Database connection failed' });
+      // Manually add CORS headers so the frontend can receive the 500 error details
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+      res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization');
+      
+      return res.status(500).json({ error: 'Database connection failed', details: error.message });
     }
   }
 
