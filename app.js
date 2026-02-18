@@ -11,7 +11,12 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow all origins (adjust this for production if needed)
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 app.use(express.json());
 
 app.use((req, res, next) => {

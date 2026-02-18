@@ -5,9 +5,6 @@ require('dotenv').config();
 let conn = null;
 
 module.exports = async (req, res) => {
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
 
   if (!conn) {
     try {
