@@ -36,7 +36,7 @@ const inspectionSchema = new Schema({
     qc:{
         type: String
     },
-    paint:{
+    painter:{
         type: String
     },
 }, { timestamps: true });
