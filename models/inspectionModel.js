@@ -17,7 +17,28 @@ const inspectionSchema = new Schema({
     inspectionDate: {
         type: Date,
         default: Date.now
-    }
+    },
+    assemblyTeam:{
+        type: String
+    },
+    hood:{
+        type: String
+    },
+    lineTest:{
+        type: String
+    },
+    runningTester:{
+        type: String
+    },
+    deliverTester:{
+        type: String
+    },
+    qc:{
+        type: String
+    },
+    paint:{
+        type: String
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Inspection', inspectionSchema);

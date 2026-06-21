@@ -9,13 +9,13 @@ const getAllInspections = async (req, res) => {
 
 // Create a new inspection
 const createInspection = async (req, res) => {
-    const { chassisNumber, inspectionDetailes, otherDetails, inspectionDate } = req.body;
+    const { chassisNumber, inspectionDetailes, otherDetails, inspectionDate, assemblyTeam, hood, lineTest, runningTester, deliverTester, qc, paint } = req.body;
     if (!chassisNumber) {
         return res.status(400).json({ error: 'Chassis number is required' });
     }
 
     try {
-        const inspection = await infectionModel.create({ chassisNumber, inspectionDetailes, otherDetails, inspectionDate });
+        const inspection = await infectionModel.create({ chassisNumber, inspectionDetailes, otherDetails, inspectionDate, assemblyTeam, hood, lineTest, runningTester, deliverTester, qc, paint });
         res.status(200).json(inspection);
     }
     catch (error) {
@@ -57,13 +57,13 @@ const deleteInspection = async (req, res) => {
 // Update a inspection
 const updateInspection = async (req, res) => {
     const { id } = req.params;
-    const { chassisNumber, inspectionDetailes, otherDetails, inspectionDate } = req.body;
+    const { chassisNumber, inspectionDetailes, otherDetails, inspectionDate, assemblyTeam, hood, lineTest, runningTester, deliverTester, qc, paint } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'No such inspection' });
     }
 
-    const inspection = await infectionModel.findByIdAndUpdate(id, { chassisNumber, inspectionDetailes, otherDetails, inspectionDate }, { new: true });
+    const inspection = await infectionModel.findByIdAndUpdate(id, { chassisNumber, inspectionDetailes, otherDetails, inspectionDate, assemblyTeam, hood, lineTest, runningTester, deliverTester, qc, paint }, { new: true });
     if (!inspection) {
         return res.status(404).json({ error: 'No such inspection' });
     }
